@@ -10,6 +10,8 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.Marker;
@@ -46,20 +48,26 @@ public class MapsActivity extends FragmentActivity implements
                 .position(senacLargoTreze)
                 .title("Senac Largo Treze")
                 .snippet("Cursos Técnicos e Livres")
-                .draggable(true));
+                .draggable(true)
+                .rotation(90)
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.logo_senac)));
         msenacLargoTreze.setTag(0);
 
         mmercadoMunicipalSA = map.addMarker(new MarkerOptions()
                 .position(mercadoMunicipalSA)
                 .title("Mercado Municipal")
                 .snippet(getString(R.string.m_cardomunicial))
-                .draggable(true));
+                .draggable(true)
+                .rotation(90)
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.logo_mmunicipal)));
         mmercadoMunicipalSA.setTag(0);
 
         mcasaCultutaSA = map.addMarker(new MarkerOptions()
                 .position(casaCultutaSA)
                 .title(getString(R.string.c_cultura))
-                .draggable(true));
+                .draggable(true)
+                .rotation(90)
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.logo_casacultura)));
         msenacLargoTreze.setTag(0);
 
         map.setOnMarkerClickListener(this);
@@ -76,10 +84,9 @@ public class MapsActivity extends FragmentActivity implements
             marker.setTag(clickCount);
             Toast.makeText(this,
                     marker.getTitle() +
-                            " has been clicked " + clickCount + " times.",
+                            " O objeto foi clicado " + clickCount + " vez.",
                     Toast.LENGTH_SHORT).show();
         }
-
         return false;
     }
 }
