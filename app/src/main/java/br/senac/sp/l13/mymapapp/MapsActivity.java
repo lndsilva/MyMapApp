@@ -4,6 +4,7 @@ import android.content.res.Resources;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -11,9 +12,20 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MapStyleOptions;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
+public class MapsActivity extends FragmentActivity implements
+        GoogleMap.OnMarkerClickListener,
+        OnMapReadyCallback {
+
+    private static final LatLng senacLargoTreze = new LatLng(-23.6471254, -46.7038018);
+    private static final LatLng mercadoMunicipalSA = new LatLng(-23.6501998, -46.6998928);
+    private static final LatLng casaCultutaSA = new LatLng(-23.6467935, -46.7086386);
+
+    private Marker msenacLargoTreze;
+    private Marker mmercadoMunicipalSA;
+    private Marker mcasaCultutaSA;
 
     private GoogleMap mMap;
 
@@ -21,45 +33,53 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
     }
 
-
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
     @Override
-    public void onMapReady(GoogleMap googleMap) {
-        mMap = googleMap;
+    public void onMapReady(GoogleMap map) {
+        mMap = map;
 
-        try {
-            // Customise the styling of the base map using a JSON object defined
-            // in a raw resource file.
-            boolean success = googleMap.setMapStyle(
-                    MapStyleOptions.loadRawResourceStyle(
-                            this, R.raw.mapstylealbergine));
+        msenacLargoTreze = map.addMarker(new MarkerOptions()
+                .position(senacLargoTreze)
+                .title("Senac Largo Treze")
+                .snippet("Cursos Técnicos e Livres")
+                .draggable(true));
+        msenacLargoTreze.setTag(0);
 
-            if (!success) {
-                Log.e("MapsActivity", "Style parsing failed.");
-            }
-        } catch (Resources.NotFoundException e) {
-            Log.e("MapsActivity", "Can't find style. Error: ", e);
+        mmercadoMunicipalSA = map.addMarker(new MarkerOptions()
+                .position(mercadoMunicipalSA)
+                .title("Mercado Municipal")
+                .snippet(getString(R.string.m_cardomunicial))
+                .draggable(true));
+        mmercadoMunicipalSA.setTag(0);
+
+        mcasaCultutaSA = map.addMarker(new MarkerOptions()
+                .position(casaCultutaSA)
+                .title(getString(R.string.c_cultura))
+                .draggable(true));
+        msenacLargoTreze.setTag(0);
+
+        map.setOnMarkerClickListener(this);
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+
+        Integer clickCount = (Integer) marker.getTag();
+
+
+        if (clickCount != null) {
+            clickCount = clickCount + 1;
+            marker.setTag(clickCount);
+            Toast.makeText(this,
+                    marker.getTitle() +
+                            " has been clicked " + clickCount + " times.",
+                    Toast.LENGTH_SHORT).show();
         }
 
-
-        // Add a marker in Sydney and move the camera
-        LatLng senacL13= new LatLng(-23.6471254, -46.7038018);
-        mMap.addMarker(new MarkerOptions().position(senacL13).title("Senac Largo Treze  "));
-        mMap.moveCamera(CameraUpdateFactory.newLatLng(senacL13));
-        mMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
+        return false;
     }
 }

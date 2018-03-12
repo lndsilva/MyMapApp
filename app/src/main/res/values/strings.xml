@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">MyMapApp</string>
     <string name="title_activity_maps">Map</string>
+    <string name="m_cardomunicial">O mercado oferece uma variedade de produtos e serviços</string>
+    <string name="c_cultura">Contribui com a construção da cidadania cultural.</string>
 </resources>
