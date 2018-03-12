@@ -49,8 +49,7 @@ public class MapsActivity extends FragmentActivity implements
                 .title("Senac Largo Treze")
                 .snippet("Cursos Técnicos e Livres")
                 .draggable(true)
-                .rotation(60)
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.logo_senac)));
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.maker_senac)));
         msenacLargoTreze.setTag(0);
 
         mmercadoMunicipalSA = map.addMarker(new MarkerOptions()
@@ -58,16 +57,14 @@ public class MapsActivity extends FragmentActivity implements
                 .title("Mercado Municipal")
                 .snippet(getString(R.string.m_cardomunicial))
                 .draggable(true)
-                .rotation(60)
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.logo_mmunicipal)));
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.maker_mercadao)));
         mmercadoMunicipalSA.setTag(0);
 
         mcasaCultutaSA = map.addMarker(new MarkerOptions()
                 .position(casaCultutaSA)
                 .title(getString(R.string.c_cultura))
                 .draggable(true)
-                .rotation(60)
-                .icon(BitmapDescriptorFactory.fromResource(R.drawable.logo_casacultura)));
+                .icon(BitmapDescriptorFactory.fromResource(R.drawable.maker_casacultura)));
         msenacLargoTreze.setTag(0);
 
         map.setOnMarkerClickListener(this);
